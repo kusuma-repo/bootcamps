@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
-const bootcamps = require('./routes/bootcamps.js');
 const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
 //const logger = require('./middleware/logger');
@@ -14,7 +13,9 @@ dotenv.config({
 });
 connectDB();
 
-
+// Route files
+const bootcamps = require('./routes/bootcamps.js');
+const courses = require('./routes/courses.js');
 const app = express();
 // Body Parse json
 app.use(express.json());
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Lets Make router()
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 // error errorHandler
 app.use(errorHandler);
