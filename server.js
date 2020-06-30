@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
+const fileUpload = require('express-fileupload');
 //const logger = require('./middleware/logger');
 const connectDB = require('./config/db');
 
@@ -25,13 +26,17 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 
 }
-
+// File uploading
+app.use(fileUpload());
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 // Lets Make router()
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
 
 // error errorHandler
 app.use(errorHandler);
+
 
 
 const PORT = process.env.PORT || 5000;
