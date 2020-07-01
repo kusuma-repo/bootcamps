@@ -15,7 +15,7 @@ const errorHandler = (err, req, res, next) => {
   }
   // Mongoose Duplicate Keys
   if (err.code === 11000) {
-    const message = 'duplicate  name of bootcamp';
+    const message = 'duplicate  name of bootcamp already exist';
     error = new ErrorResponse(message, 400);
   }
   if (err.name === 'ValidationError') {

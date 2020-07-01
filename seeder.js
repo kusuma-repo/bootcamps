@@ -11,7 +11,7 @@ dotenv.config({
 // load models
 const bootcamp = require('./models/Bootcamp');
 const course = require('./models/Courses');
-
+const user = require('./models/User');
 // connectDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -23,11 +23,13 @@ mongoose.connect(process.env.MONGO_URI, {
 // Read JSON Files
 const bootcamps = JSON.parse(fs.readFileSync(`${__dirname}/_data/bootcamps.json`, `utf-8`));
 const courses = JSON.parse(fs.readFileSync(`${__dirname}/_data/courses.json`, `utf-8`));
+const users = JSON.parse(fs.readFileSync(`${__dirname}/_data/users.json`, `utf-8`));
 
 const importData = async () => {
   try {
     await bootcamp.create(bootcamps);
     await course.create(courses);
+    await user.create(users);
     console.log('data succeded imported..'.green.inverse);
   } catch (e) {
     console.error(e);
@@ -39,6 +41,7 @@ const deleteBootcamp = async () => {
   try {
     await bootcamp.deleteMany();
     await course.deleteMany();
+    await user.deleteMany();
     console.log('data deleted succeded'.blue.inverse);
     process.exit();
   } catch (e) {

@@ -11,10 +11,16 @@ const advancedSearch = require('../middleware/advancedSearch');
 const router = express.Router({
   mergeParams: true
 });
+const {
+  security,
+  authorizations
+} = require('../middleware/auth');
 router.route('/').get(advancedSearch(Courses, {
   path: 'bootcamp',
   select: 'name description'
-}), getCourses).post(addCourse);
-router.route('/:id').get(getCourse).put(updateCourse).delete(deleteCourse)
+}), getCourses).post(security, authorizations('publisher', 'admin'), addCourse);
+router.route('/:id').get(getCourse)
+  .put(security, authorizations('publisher', 'admin'), updateCourse)
+  .delete(security, authorizations('publisher', 'admin'), deleteCourse)
 
 module.exports = router;

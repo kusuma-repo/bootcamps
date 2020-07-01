@@ -48,13 +48,17 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 // @acces    Private
 exports.addCourse = asyncHandler(async (req, res, next) => {
   req.body.bootcamp = req.params.bootcampId;
-
+  req.body.user = req.user.id;
   const bootcamp = await Bootcamp.findById(req.params.bootcampId).populate({
     path: 'bootcamp',
     select: 'name description'
   });
   if (!bootcamp) {
     return next(new ErrorResponse(`bootcamp tidak tersedia  ${req.params.bootcampId}`, 404));
+  }
+  // check if the user owner of the bootcamps
+  if (bootcamp.user.toString() !== req.user.id && req.user.roles !== 'admin') {
+    return next(new ErrorResponse(`your id ${req.user.id} is unauthorization to Create a Courses`, 404));
   }
   const course = await Course.create(req.body);
   res.status(200).json({
@@ -71,6 +75,12 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
   let course = await Course.findById(req.params.id);
   if (!course) {
     return next(new ErrorResponse(`Courses tidak tersedia  ${req.params.bootcampId}`, 404));
+  }
+
+
+  // check if the user owner of the bootcamps
+  if (course.user.toString() !== req.user.id && req.user.roles !== 'admin') {
+    return next(new ErrorResponse(`your id ${req.user.id} is unauthorization to update this Courses`, 404));
   }
   course = await Course.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -92,6 +102,10 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
   const course = await Course.findById(req.params.id);
   if (!course) {
     return next(new ErrorResponse(`Courses tidak tersedia  ${req.params.bootcampId}`, 404));
+  }
+  // check if the user owner of the bootcamps
+  if (course.user.toString() !== req.user.id && req.user.roles !== 'admin') {
+    return next(new ErrorResponse(`your id ${req.user.id} is unauthorization to Delete this Courses`, 404));
   }
   await course.remove();
 

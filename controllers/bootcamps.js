@@ -28,6 +28,14 @@ exports.getSingleBootcamp = asyncHandler(async (req, res, next) => {
 // @routes   GET /api/v1/bootcamps
 // @acces    Public
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id
+  const publishedBootcamp = await Bootcamp.findOne({
+    user: req.user.id
+  });
+  // if there is one user already published
+  if (publishedBootcamp && req.user.roles !== 'admin') {
+    return next(new ErrorResponse(`The user with ID ${req.user.id} has already published a bootcamp`, 400))
+  }
   const bootcamp = await Bootcamp.create(req.body);
   res.status(201).json({
     success: true,
@@ -38,13 +46,18 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
 // @routes   GET /api/v1/bootcamps/:id
 // @acces    Private
 exports.updateBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findOneAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  })
+  let bootcamp = await Bootcamp.findById(req.params.id)
   if (!bootcamp) {
     return next(new ErrorResponse(`Bootcamp tidak tersedia  ${req.params.id}`, 404));
   }
+  // check if the user owner of the bootcamps
+  if (bootcamp.user.toString() !== req.user.id && req.user.roles !== 'admin') {
+    return next(new ErrorResponse(`your id ${req.params.id} is unauthorization to update this bootcamps`, 404));
+  }
+  bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
   res.status(200).json({
     success: true,
     data: bootcamp
@@ -58,6 +71,10 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findById(req.params.id)
   if (!bootcamp) {
     return next(new ErrorResponse(`Bootcamp tidak tersedia  ${req.params.id}`, 404));
+  }
+  // check if the user owner of the bootcamps
+  if (bootcamp.user.toString() !== req.user.id && req.user.roles !== 'admin') {
+    return next(new ErrorResponse(`your id ${req.params.id} is unauthorization to delete this bootcamps`, 404));
   }
   bootcamp.remove();
   res.status(200).json({
