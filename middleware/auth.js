@@ -17,7 +17,7 @@ exports.security = asyncHandler(async (req, res, next) => {
   try {
     // veryfy sendTokenCookie
     const decoded = jwt.verify(token, process.env.JWT_SECRET_TOKEN);
-    console.log(decoded);
+
     req.user = await User.findById(decoded.id);
     next()
   } catch (err) {

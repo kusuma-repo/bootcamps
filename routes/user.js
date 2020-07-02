@@ -2,7 +2,11 @@ const express = require('express');
 const {
   registerUser,
   loginUser,
-  logedUser
+  logedUser,
+  forgotPassword,
+  resetPassword,
+  detailUser,
+  updatePassword
 } = require('../controllers/auth');
 const {
   security,
@@ -12,7 +16,10 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/getme', security, logedUser)
-
+router.get('/getme', security, logedUser);
+router.put('/updatedetails', security, detailUser);
+router.put('/updatepassword', security, updatePassword);
+router.post('/forgotpassword', forgotPassword);
+router.put('/resetPassword/:resettoken', resetPassword);
 
 module.exports = router;
