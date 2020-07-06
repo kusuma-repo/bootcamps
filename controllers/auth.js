@@ -61,6 +61,19 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 // @descr    Get logged in User
 // @routes   get /api/v1/user/getme
 // @acces    Private
+exports.logoutdUser = asyncHandler(async (req, res, next) => {
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+  res.status(200).json({
+    success: true,
+    data: {}
+  })
+})
+// @descr    Get logged in User
+// @routes   get /api/v1/user/getme
+// @acces    Private
 exports.logedUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   res.status(200).json({
@@ -72,14 +85,14 @@ exports.logedUser = asyncHandler(async (req, res, next) => {
 // @routes   get /api/v1/user/updatedetails
 // @acces    Private
 exports.detailUser = asyncHandler(async (req, res, next) => {
-  const fieldUpdate = {
-    nama: req.body.name,
-    email: req.body.email
-  };
 
-  const user = await User.findByIdAndUpdate(req.user.id, fieldUpdate, {
+
+  const user = await User.findOneAndUpdate(req.user.id, {
+    $set: req.body
+  }, {
     new: true,
     runValidators: true
+
   });
   res.status(200).json({
     success: true,
@@ -118,7 +131,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     validateBeforeSave: false
   });
   // create reset url
-  const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/user/resetpassword/${resetToken}`;
+  const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/resetpassword/${resetToken}`;
   const message = `You receiving this email because you
   click resetpassword Please make PUT request to :\n\n
   ${resetUrl}`;

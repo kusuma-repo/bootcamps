@@ -7,10 +7,11 @@ const {
   deleteCourse
 } = require('../controllers/courses.js');
 const Courses = require('../models/Courses');
-const advancedSearch = require('../middleware/advancedSearch');
+
 const router = express.Router({
   mergeParams: true
 });
+const advancedSearch = require('../middleware/advancedSearch');
 const {
   security,
   authorizations

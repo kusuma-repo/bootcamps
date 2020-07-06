@@ -12,7 +12,7 @@ exports.security = asyncHandler(async (req, res, next) => {
   }
   // Make Sure toke is exist
   if (!token) {
-    return next(new ErrorResponse('Not authorization to access this route', 401));
+    return next(new ErrorResponse('Not authorized to access this route', 401));
   }
   try {
     // veryfy sendTokenCookie
@@ -21,15 +21,16 @@ exports.security = asyncHandler(async (req, res, next) => {
     req.user = await User.findById(decoded.id);
     next()
   } catch (err) {
-    return next(new ErrorResponse('Not authorization to access this route', 401));
+    return next(new ErrorResponse('Not authorized to access this route', 401));
   }
 })
 
 // grant authorization for User
 exports.authorizations = (...roles) => {
   return (req, res, next) => {
+
     if (!roles.includes(req.user.roles)) {
-      return next(new ErrorResponse(`user with role ${req.user.roles} Not authorization to access this route`, 403));
+      return next(new ErrorResponse(`Opps .. Sorry your roles cannot access this route`, 403));
     }
     next();
   }

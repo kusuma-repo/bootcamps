@@ -20,12 +20,14 @@ const {
 } = require('../middleware/auth');
 // include other resource routers
 const courseRouter = require('./courses');
+const reviewsRouter = require('./reviews');
 
 // Pass THis route to other resource
 router.use('/:bootcampId/courses', courseRouter);
+router.use('/:bootcampId/reviews', reviewsRouter);
 
 
-router.route('/:id/photo').put(security, authorizations, bootcampUpload)
+router.route('/:id/photo').put(security, authorizations('publisher', 'admin'), bootcampUpload)
 router.route('/radius/:zipcode/:distance').get(getBootcampsRadius);
 router.route('/').get(advancedSearch(Bootcamp, 'courses'), getAllBootcamps).post(security, authorizations('publisher', 'admin'), createBootcamp);
 router.route('/:id').get(getSingleBootcamp)

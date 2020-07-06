@@ -1,0 +1,55 @@
+[
+  {
+    "name": "DumbWays Indonesia",
+    "description": "DumbWays merupakan coding bootcamp GRATIS pertama di Indonesia. Siswa akan dibekali kemampuan standard industri dan langsung disalurkan kerja setelah lulus.",
+    "website": "https://devworks.com",
+    "phone": "(021) 878-3233-2888",
+    "email": "enroll@devworks.com",
+    "address": "Sawah lama, Kec.Ciputat, Kota Tangerang Selatan BT 15413",
+    "careers": ["Web Development", "UI/UX", "Business"],
+    "housing": true,
+    "jobAssistance": true,
+    "jobGuarantee": false,
+    "acceptGi": true
+  },
+  {
+    "name": "Hacktiv8 Indonesia",
+    "description": "HACKTIV8 adalah program pembelajaran yang berfokus pada bidang IT yang terdiri dari Full Time Program, Part Time Program, dan Online Program.",
+    "website": "https://devworks.com",
+    "phone": "(062) 878-3233-2888",
+    "email": "enroll@devworks.com",
+    "address": "Kebayoran Lama Selatan Kec Kebayoran Lama Kota Jakarta Selatan JK 12240",
+    "careers": ["Web Development", "UI/UX", "Business"],
+    "housing": true,
+    "jobAssistance": true,
+    "jobGuarantee": false,
+    "acceptGi": true
+  },
+  {
+    "name": "RUBICAMP INTRODUCTION",
+    "description": "hadir untuk memenuhi kebutuhan akan programmer di dunia industri teknologi saat ini. Kebutuhan yang terus meningkat untuk mengembangkan aplikasi merupakan salah satu alasan mengapa karir sebagai programmer begitu menjanjikan saat ini dan di masa mendatang. .",
+    "website": "https://rubicamp.com",
+    "phone": "(062) 81-1223-7786",
+    "email": "admin@rubicamp.com",
+    "address": "Komplek Pasanggrahan Indah Blok 20 No. 3 Kota Bandung JB  40111",
+    "careers": ["Web Development", "UI/UX", "Business"],
+    "housing": true,
+    "jobAssistance": true,
+    "jobGuarantee": false,
+    "acceptGi": true
+  },
+  {
+    "name": "ENIGMA CAMP",
+    "description": "HACKTIV8 adalah program pembelajaran yang berfokus pada bidang IT yang terdiri dari Full Time Program, Part Time Program, dan Online Program.",
+    "website": "https://www.enigmacamp.com",
+    "phone": "(062) 21-2780-6212",
+    "email": "info@enigmacamp.com",
+    "address": " Ragunan, Pasar.Minggu Kota Jakarta Selatan JK 12550",
+    "careers": ["Web Development", "UI/UX", "Business"],
+    "housing": true,
+    "jobAssistance": true,
+    "jobGuarantee": false,
+    "acceptGi": true
+  }
+
+]
